@@ -1,1 +1,2 @@
 export const GET_USER_INFO = "GET_USER_INFO";
+export const GET_SOL_PORTFOLIO = "GET_SOL_PORTFOLIO";
