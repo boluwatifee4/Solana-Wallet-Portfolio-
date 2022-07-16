@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { useDispatch } from "react-redux";
 
 const persistConfig = {
     key: "root",
