@@ -1,15 +1,15 @@
-import { FILE } from "dns";
+// import { FILE } from "dns";
 import React, { useEffect } from "react";
 import { useMoralis } from "react-moralis";
-import { useMoralisWeb3Api } from "react-moralis";
+// import { useMoralisWeb3Api } from "react-moralis";
 import { getSolPortfolio, getNftMetadata } from "../store/actions/solana.actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useMoralisSolanaApi, useMoralisSolanaCall } from "react-moralis";
+// import { useMoralisSolanaApi, useMoralisSolanaCall } from "react-moralis";
 type Props = {}
 
 const Home: React.FC<Props> = (props) => {
   const { authenticate, isAuthenticated, user } = useMoralis();
-  const Moralis = useMoralis()
+  // const Moralis = useMoralis()
   const [userDetails, setUserDetails] = React.useState<any>({});
   const portfolio = useSelector((state: any) => state.solana.solPortfolio);
   const nftsLength = portfolio?.data?.nfts?.length
@@ -35,7 +35,7 @@ const Home: React.FC<Props> = (props) => {
 
   useEffect(() => {
     dispatch<any>(getSolPortfolio("devnet", "6XU36wCxWobLx5Rtsb58kmgAJKVYmMVqy4SHXxENAyAe"))
-    dispatch<any>(getNftMetadata("mainnet", "2P5msLMi5one6S3qBsUwsDqutQkzuDuG9ush1xLcxYVN"))
+    // dispatch<any>(getNftMetadata("mainnet", "2P5msLMi5one6S3qBsUwsDqutQkzuDuG9ush1xLcxYVN"))
   }, []);
 
 
