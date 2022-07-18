@@ -1,16 +1,59 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.logo{
+  font-family: 'Caveat', cursive;
+}
+.logo-img{
+  animation: spin infinite 20s linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+  .hero-h1{
+    background: linear-gradient( 
+      -45deg,#fbdded,#b3eef3,#ebd487,#edd37f);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-size: 400% 400%;
+          -webkit-animation: gradient 5s ease infinite;
+          -moz-animation: gradient 5s ease infinite;
+          animation: gradient 5s ease infinite;
+      }
+      @keyframes gradient {
+          0% {
+              background-position: 0 50%;
+          }
+          50% {
+              background-position: 100% 50%;
+          }
+          50% {
+              background-position: 100% 50%;
+          }
+      }
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
