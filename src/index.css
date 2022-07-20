@@ -32,7 +32,7 @@ code {
 }
   .hero-h1{
     background: linear-gradient( 
-      -45deg,#fbdded,#b3eef3,#ebd487,#edd37f);
+      -45deg,#fbdded,#b3eef3,#ebd487,#7fceed);
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;

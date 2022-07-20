@@ -42,7 +42,7 @@ const Home: React.FC<Props> = (props) => {
 
 
   return (
-    <div>
+    <div className="bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600 h-screen text-white">
       <h1 className="text-red-500">Home</h1>
       <button onClick={login}>Logged in</button>
       <p>Sol address: {userDetails?.attributes?.solAddress} 6XU36wCxWobLx5Rtsb58kmgAJKVYmMVqy4SHXxENAyAe</p>
