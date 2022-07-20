@@ -1,4 +1,5 @@
 import { GET_SOL_PORTFOLIO } from "../types/types";
+import { GET_NFT_METADATA } from "../types/types";
 import axios from "axios";
 import { Dispatch } from "redux";
 
@@ -23,3 +24,23 @@ export const getSolPortfolio = (network:string, address:string) => async (dispat
         console.log(err);
     }
 }
+
+export const getNftMetadata = (network:string, address:string) => async (dispatch:Dispatch) => {
+    // console.log(API_URL);
+    console.log("getNftMetadata");
+    try {
+        const res = await axios.get(`${API_URL}nft/${network}/${address}/metadata`, {
+            headers: {
+                "x-api-key": API_KEY
+            }
+        });
+        console.log(res);
+        dispatch({
+            type: GET_NFT_METADATA,
+            payload: res
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
