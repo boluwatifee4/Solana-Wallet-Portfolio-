@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import solLogo from "../assests/images/solLogo.png"
 import { useMoralis } from "react-moralis";
-
+import usePagination from "../toolkits/usePagination";
 
 type Props = {
     color: string;
@@ -14,6 +14,13 @@ const Tabs: React.FC<Props> = (props) => {
     const { authenticate, isAuthenticated, user } = useMoralis();
     const nftsLength = portfolio?.data?.nfts?.length
     const tokensLength = portfolio?.data?.tokens?.length
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const [itemsPerPage, setItemsPerPage] = React.useState(5);
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = portfolio?.data?.tokens?.slice(indexOfFirstItem, indexOfLastItem);
+    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
     useEffect(() => {
         console.log("portfolio", portfolio);
         // dispatch<any>(getNftMetadata("mainnet", "2P5msLMi5one6S3qBsUwsDqutQkzuDuG9ush1xLcxYVN"))
@@ -109,15 +116,19 @@ const Tabs: React.FC<Props> = (props) => {
                                 </div>
                             </div>
                                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-                                    <p>
-                                        Completely synergize resource taxing relationships via
-                                        premier niche markets. Professionally cultivate one-to-one
-                                        customer service with robust ideas.
-                                        <br />
-                                        <br />
-                                        Dynamically innovate resource-leveling customer service for
-                                        state of the art customer service.
-                                    </p>
+                                <div className="mt-10 flex justify-center items-center ">
+                                    <div className="w-3/6 p-6 shadow-xl  bg-gray-400 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400">
+                                       {currentItems?.map((item: any, index: number) => {
+                                            return (
+                                                <div className="flex my-2 py-2 border-b border-purple-300 justify-start items-center" key={index}>
+                                                    
+                                                    <h1 className="font-bold text-3xl">{item?.amount}</h1>
+                                                </div>
+                                            )
+                                        }
+                                       )}
+                                    </div>
+                                </div>
                                 </div>
                                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
                                     <p>
