@@ -16,11 +16,12 @@ type Props = {}
 const Welcome: React.FC<Props> = (props) => {
     const { authenticate, isAuthenticated, user } = useMoralis();
     const [userDetails, setUserDetails] = React.useState<any>({});
+    const [btnText, setBtnText] = React.useState<string>("Connect With 👻 Wallet");
     const push = useNavigate();
     const dispatch = useDispatch();
     const login = async () => {
         if (!isAuthenticated) {
-            console.log("isAuthenticating");
+            setBtnText("Connecting...");
           await authenticate({ type: "sol" })
             .then(function (user) {
               // console.log(user);
@@ -53,7 +54,7 @@ const Welcome: React.FC<Props> = (props) => {
                     </div>
                     <div onClick={login} className="text-white">
                         <button  className="text-sm uppercase p-3 bg-gray-400 rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400">
-                            {!isAuthenticated ? "Connect With 👻 Wallet" : "👻 Wallet Connected"}
+                            {!isAuthenticated ? btnText : "👻 Wallet Connected"}
                         </button>
                     </div>
                 </header>
@@ -72,7 +73,7 @@ const Welcome: React.FC<Props> = (props) => {
                            <Link
                             to="/home"
                            >
-                             Get Started
+                            {isAuthenticated ? "Go To Your Portfolio" : "Get Started"}
                            </Link>
                         </button>
                     </div>
