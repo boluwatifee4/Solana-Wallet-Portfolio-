@@ -1,10 +1,12 @@
 import { GET_SOL_PORTFOLIO } from "../types/types";
 import { GET_NFT_METADATA } from "../types/types";
+import { FETCH_NFT_URI } from "../types/types";
 
 const initialState = {
     solPortfolio: [],
     loading: false,
     nfts: [],
+    nft: {},
     error:[]
 }
 
@@ -21,6 +23,12 @@ export default function solanaReducer(state = initialState, action:any) {
             return {
                 ...state,
                 nfts: action.payload,
+                loading: false
+            }
+        case FETCH_NFT_URI:
+            return {
+                ...state,
+                nft: action.payload,
                 loading: false
             }
         default:

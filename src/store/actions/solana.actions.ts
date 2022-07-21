@@ -1,5 +1,6 @@
 import { GET_SOL_PORTFOLIO } from "../types/types";
 import { GET_NFT_METADATA } from "../types/types";
+import { FETCH_NFT_URI } from "../types/types";
 import axios from "axios";
 import { Dispatch } from "redux";
 
@@ -37,6 +38,25 @@ export const getNftMetadata = (network:string, address:string) => async (dispatc
         console.log(res);
         dispatch({
             type: GET_NFT_METADATA,
+            payload: res
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const fetchNftUri = (url:string) => async (dispatch:Dispatch) => {
+    // console.log(API_URL);
+    console.log("fetchNftUri");
+    try {
+        const res = await axios.get(url, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        console.log(res);
+        dispatch({
+            type: FETCH_NFT_URI,
             payload: res
         });
     } catch (err) {
