@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import solLogo from "../assests/images/solLogo.png"
 import { useMoralis } from "react-moralis";
-import usePagination from "../toolkits/usePagination";
+import UsePagination from "../toolkits/usePagination";
 
 type Props = {
     color: string;
@@ -15,12 +15,24 @@ const Tabs: React.FC<Props> = (props) => {
     const nftsLength = portfolio?.data?.nfts?.length
     const tokensLength = portfolio?.data?.tokens?.length
     const [currentPage, setCurrentPage] = React.useState(1);
-    const [itemsPerPage, setItemsPerPage] = React.useState(5);
+    const [itemsPerPage, setItemsPerPage] = React.useState(2);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = portfolio?.data?.tokens?.slice(indexOfFirstItem, indexOfLastItem);
+    const currentNftItems = portfolio?.data?.nfts?.slice(indexOfFirstItem, indexOfLastItem);
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+    const paginateNft = (pageNumber: number) => setCurrentPage(pageNumber);
+
+    const goToLastPage = (val:any) => {
+        setCurrentPage(Math.ceil(portfolio?.data?.tokens?.length / itemsPerPage));
+    }
+    const goToNftLastPage = (val:any) => {
+        setCurrentPage(Math.ceil(portfolio?.data?.nfts?.length / itemsPerPage));
+    }
+    const goToFirstPage = () => {
+        setCurrentPage(1);
+    }
     useEffect(() => {
         console.log("portfolio", portfolio);
         // dispatch<any>(getNftMetadata("mainnet", "2P5msLMi5one6S3qBsUwsDqutQkzuDuG9ush1xLcxYVN"))
@@ -95,50 +107,90 @@ const Tabs: React.FC<Props> = (props) => {
                     <div className="relative flex flex-col min-w-0 break-words">
                         <div className="px-4  flex-auto">
                             <div className="tab-content tab-space">
-                            <div className={openTab === 1 ? "block" : "hidden"} id="link1">
-                                <div className="mt-10 flex justify-center items-center ">
-                                    <div className="w-3/6 p-6 shadow-xl  bg-gray-400 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400">
-                                        <div className="flex my-2 py-2 border-b border-purple-300 justify-start items-center">
-                                            <img src={solLogo} className="logo-img w-20" alt="" />
-                                            <h1 className="font-bold text-3xl">{portfolio?.data?.nativeBalance?.solana > 0 ? portfolio?.data?.nativeBalance?.solana : 0}</h1>
-                                        </div>
-                                        <div className="flex justify-around py-2 my-2 items-center">
-                                            <div className="flex flex-col">
-                                                <p className="text-md font-semibold text-purple-300">No of NFTS</p>
-                                                <p className="text-2xl">{nftsLength}</p>
+                                <div className={openTab === 1 ? "block" : "hidden"} id="link1">
+                                    <div className="mt-10 flex justify-center items-center ">
+                                        <div className="w-3/6 p-6 shadow-xl  bg-gray-400 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400">
+                                            <div className="flex my-2 py-2 border-b border-purple-300 justify-start items-center">
+                                                <img src={solLogo} className="logo-img w-20" alt="" />
+                                                <h1 className="font-bold text-3xl">{portfolio?.data?.nativeBalance?.solana > 0 ? portfolio?.data?.nativeBalance?.solana : 0}</h1>
                                             </div>
-                                            <div className="flex flex-col">
-                                                <p className="text-md font-semibold text-purple-300">No of Tokens</p>
-                                                <p className="text-2xl">{tokensLength}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                                <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-                                <div className="mt-10 flex justify-center items-center ">
-                                    <div className="w-3/6 p-6 shadow-xl  bg-gray-400 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400">
-                                       {currentItems?.map((item: any, index: number) => {
-                                            return (
-                                                <div className="flex my-2 py-2 border-b border-purple-300 justify-start items-center" key={index}>
-                                                    
-                                                    <h1 className="font-bold text-3xl">{item?.amount}</h1>
+                                            <div className="flex justify-around py-2 my-2 items-center">
+                                                <div className="flex flex-col">
+                                                    <p className="text-md font-semibold text-purple-300">No of NFTS</p>
+                                                    <p className="text-2xl">{nftsLength}</p>
                                                 </div>
-                                            )
-                                        }
-                                       )}
+                                                <div className="flex flex-col">
+                                                    <p className="text-md font-semibold text-purple-300">No of Tokens</p>
+                                                    <p className="text-2xl">{tokensLength}</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <div className={openTab === 2 ? "block" : "hidden"} id="link2">
+                                    <div className="mt-10 flex justify-center items-center ">
+                                        <div className=" w-4/6 p-6 shadow-xl  bg-gray-400 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400">
+                                            <div className="flex flex-wrap justify-around">
+                                                {currentItems?.map((item: any, index: number) => {
+                                                    return (
+                                                        <div className="mx-1 shadow-lg text-left my-2 py-1 p-2 w-1/3 bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600 text-white rounded-md">
+                                                            <div className="my-2 py-1 border-b">
+                                                                <h1 className="text-xs my-2">Token Amount:</h1>
+                                                                <h1 className="text-left text-sm font-semibold">{item?.amount}</h1>
+                                                            </div>
+                                                            <div className="my-2 py-1">
+                                                                <h1 className="text-xs my-2">Associated Token Address:</h1>
+                                                                <h1 className="text-left text-xs">{item?.associatedTokenAddress}</h1>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                }
+                                                )}
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <p className="text-sm">Page {currentPage} of {Math.ceil(portfolio?.data?.tokens?.length / itemsPerPage)}</p>
+                                                <div className="flex items-center justify-end">
+                                                    <h1 onClick={goToFirstPage} className="cursor-pointer"> ← </h1>
+                                                    <UsePagination itemsPerPage={itemsPerPage} totalItems={tokensLength} paginate={paginate} />
+                                                    <h1 onClick={goToLastPage} className="cursor-pointer"> → </h1>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                                    <p>
-                                        Efficiently unleash cross-media information without
-                                        cross-media value. Quickly maximize timely deliverables for
-                                        real-time schemas.
-                                        <br />
-                                        <br /> Dramatically maintain clicks-and-mortar solutions
-                                        without functional solutions.
-                                    </p>
+                                <div className="mt-10 flex justify-center items-center ">
+                                        <div className=" w-4/6 p-6 shadow-xl  bg-gray-400 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400">
+                                            <div className="flex flex-wrap justify-around">
+                                                {currentNftItems?.map((item: any, index: number) => {
+                                                    return (
+                                                        <div className="mx-1 shadow-lg text-left my-2 py-1 p-2 w-1/3 bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600 text-white rounded-md">
+                                                            <div className="my-2 py-1 border-b">
+                                                                <h1 className="text-xs my-2">Nft Amount:</h1>
+                                                                <h1 className="text-left text-sm font-semibold">{item?.amount}</h1>
+                                                            </div>
+                                                            <div className="my-2 py-1">
+                                                                <h1 className="text-xs my-2">Associated Nft Address:</h1>
+                                                                <h1 className="text-left text-xs">{item?.associatedTokenAddress}</h1>
+                                                            </div>
+                                                            <button className="text-sm uppercase bg-gray-400 rounded bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 w-full">
+                                                                View Nft
+                                                            </button>
+                                                        </div>
+                                                    )
+                                                }
+                                                )}
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <p className="text-sm">Page {currentPage} of {Math.ceil(portfolio?.data?.nfts?.length / itemsPerPage)}</p>
+                                                <div className="flex items-center justify-end">
+                                                    <h1 onClick={goToFirstPage} className="cursor-pointer"> ← </h1>
+                                                    <UsePagination itemsPerPage={itemsPerPage} totalItems={nftsLength} paginate={paginateNft} />
+                                                    <h1 onClick={goToNftLastPage} className="cursor-pointer"> → </h1>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
