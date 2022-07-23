@@ -123,18 +123,18 @@ const Tabs: React.FC<Props> = (props) => {
                             <div className="tab-content tab-space">
                                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
                                     <div className="mt-10 flex justify-center items-center ">
-                                        <div className="w-3/6 p-6 shadow-xl  bg-gray-400 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400">
+                                        <div className=" w-5/6 md:w-3/6 p-6 shadow-xl  bg-gray-400 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400">
                                             <div className="flex my-2 py-2 border-b border-purple-300 justify-start items-center">
-                                                <img src={solLogo} className="logo-img w-20" alt="" />
-                                                <h1 className="font-bold text-3xl">{portfolio?.data?.nativeBalance?.solana > 0 ? portfolio?.data?.nativeBalance?.solana : 0}</h1>
+                                                <img src={solLogo} className="logo-img w-14 md:w-20" alt="" />
+                                                <h1 className="font-bold text-2xl md:text-3xl">{portfolio?.data?.nativeBalance?.solana > 0 ? portfolio?.data?.nativeBalance?.solana : 0}</h1>
                                             </div>
                                             <div className="flex justify-around py-2 my-2 items-center">
                                                 <div className="flex flex-col">
-                                                    <p className="text-md font-semibold text-purple-300">No of NFTS</p>
+                                                    <p className="text-sm md:text-md font-semibold text-purple-300">No of NFTS</p>
                                                     <p className="text-2xl">{nftsLength}</p>
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <p className="text-md font-semibold text-purple-300">No of Tokens</p>
+                                                    <p className="text-sm md:text-md font-semibold text-purple-300">No of Tokens</p>
                                                     <p className="text-2xl">{tokensLength}</p>
                                                 </div>
                                             </div>
@@ -143,7 +143,7 @@ const Tabs: React.FC<Props> = (props) => {
                                 </div>
                                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                                     <div className="mt-10 flex justify-center items-center ">
-                                        <div className=" w-4/6 p-6 shadow-xl  bg-gray-400 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400">
+                                        <div className=" w-5/6 md:w-3/6 p-6 shadow-xl  bg-gray-400 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400">
                                             <div className="flex flex-wrap justify-around">
                                                 {currentItems?.map((item: any, index: number) => {
                                                     return (
