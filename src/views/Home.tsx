@@ -48,10 +48,10 @@ const Home: React.FC<Props> = (props) => {
         <input type="text"
           value={solAddress}
           onChange={(e) => setSolAddress(e.target.value)}
-          className="bg-gray-400 rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 w-3/6 p-3 text-white"
+          className="bg-gray-400 md:pr-0 pr-14 rounded-full text-xs md:text-base bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 w-[95%]  md:w-3/6 p-3 text-white"
           placeholder={isAuthenticated ? "Sol Address :" + " " + userDetails?.solAddress : "Enter Solana Address"}
         />
-        {isAuthenticated && <span onClick={getPortfolio} style={{ marginLeft: "-3rem" }} className="bg-gray-400 rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 p-3 text-white cursor-pointer">Go</span>}
+        {isAuthenticated && <span onClick={getPortfolio} style={{ marginLeft: "-3rem", zIndex: "1" }} className=" bg-purple-900  rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 p-2 md:p-3 text-white cursor-pointer text-sm md:text-base">Go</span>}
       </div>
 
      <div className="mt-10">
