@@ -16,7 +16,7 @@ const UsePagination: React.FC<Props> = (props) => {
         <div>
             <ul className="pagination flex items-center justofy-center flex-row">
                 {pageNumbers.map(number => (
-                    <li key={number} className="page-item m-2 text-lg px-2 p-1 ">
+                    <li key={number} className="page-item m-2 text-sm px-2 p-1 ">
                         <a onClick={() => paginate(number)} className="page-link" href="#">{number}</a>
                     </li>
                 ))}
