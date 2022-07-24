@@ -5,7 +5,8 @@ import { useMoralis } from "react-moralis";
 import { getSolPortfolio, getNftMetadata } from "../store/actions/solana.actions";
 import { useDispatch, useSelector } from "react-redux";
 import TabsRender from "./Tabs";
-import solLogo from "../assests/images/solLogo.png"
+// import solLogo from "../assests/images/solLogo.png"
+import loader from "../assests/images/loader.gif"
 // import { useMoralisSolanaApi, useMoralisSolanaCall } from "react-moralis";
 type Props = {}
 
@@ -14,18 +15,19 @@ const Home: React.FC<Props> = (props) => {
   // const Moralis = useMoralis()
   const [userDetails, setUserDetails] = React.useState<any>(JSON.parse(localStorage.getItem("userDetails") || '{}'));
   const portfolio = useSelector((state: any) => state.solana.solPortfolio);
-  const [solAddress, setSolAddress] = React.useState<string>("6XU36wCxWobLx5Rtsb58kmgAJKVYmMVqy4SHXxENAyAe");
+  const [solAddress, setSolAddress] = React.useState<string>(userDetails?.solAddress);
   
   const dispatch = useDispatch();
-  const [openTab, setOpenTab] = React.useState(1);
-  // console.log("user",portfolio);
+  // const [openTab, setOpenTab] = React.useState(1);
+  
+  // console.log("user",userDetails);
 
   const getPortfolio = () => {
     dispatch<any>(getSolPortfolio("devnet", solAddress));
   }
   useEffect(() => {
     dispatch<any>(getSolPortfolio("devnet", solAddress));
-    console.log("portfolio", portfolio);
+    // console.log("portfolio", portfolio);
     // dispatch<any>(getNftMetadata("mainnet", "2P5msLMi5one6S3qBsUwsDqutQkzuDuG9ush1xLcxYVN"))
   }, []);
 
@@ -33,7 +35,7 @@ const Home: React.FC<Props> = (props) => {
 
 
   return (
-    <div className="bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600 h-screen text-white">
+    <div className="my-2 text-white">
       <div className="p-3">
         {isAuthenticated ? (
           <h1 className="font-semibold text-3xl mt-8 my-4"></h1>
@@ -51,12 +53,28 @@ const Home: React.FC<Props> = (props) => {
           className="bg-gray-400 md:pr-0 pr-14 rounded-full text-xs md:text-base bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 w-[95%]  md:w-3/6 p-3 text-white"
           placeholder={isAuthenticated ? "Sol Address :" + " " + userDetails?.solAddress : "Enter Solana Address"}
         />
-        {isAuthenticated && <span onClick={getPortfolio} style={{ marginLeft: "-3rem", zIndex: "1" }} className=" bg-purple-900  rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 p-2 md:p-3 text-white cursor-pointer text-sm md:text-base">Go</span>}
+        { <span onClick={getPortfolio} style={{ marginLeft: "-3rem", zIndex: "1" }} className=" bg-purple-900  rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 p-2 md:p-3 text-white cursor-pointer text-sm md:text-base">Go</span>}
       </div>
 
-     <div className="mt-10">
-     <TabsRender />
-     </div>
+   {
+      // Object.keys(portfolio).length === 0 ? (
+        Object.keys(portfolio).length> 0 ? (
+          <div className="mt-10">
+          <TabsRender />
+          </div>
+        ) : (
+         <div className="flex justify-center items-center mt-6">
+           <img className="md:w-[25%] w-[50%]" src={loader} alt="" />
+         </div>
+        )
+      // ) : (
+      //   <div className="mt-10">
+      //     <h1 className="text-center font-bold">
+      //       NO DATA RETURNED
+      //     </h1>
+      //   </div>
+      // )
+   }
       {/* <p>Sol address: {userDetails?.attributes?.solAddress} 6XU36wCxWobLx5Rtsb58kmgAJKVYmMVqy4SHXxENAyAe</p>
       <p>Solana Balance: {portfolio?.data?.nativeBalance?.solana}</p>
       <p>Associated Nfts: {nftsLength}</p>
