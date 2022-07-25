@@ -159,7 +159,7 @@ const Tabs: React.FC<Props> = (props) => {
                                             <div className="flex-col flex md:flex-row flex-wrap justify-around">
                                                 {currentItems?.map((item: any, index: number) => {
                                                     return (
-                                                        <div className="mx-1 shadow-lg text-left my-2 py-1 p-2 w-[95%] md:w-1/3 bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600 text-white rounded-md">
+                                                        <div className="mx-1  text-left my-2 py-1 p-2 w-[95%] md:w-1/3 bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600 text-white rounded-md">
                                                             <div className="my-2 py-1 border-b">
                                                                 <h1 className="text-xs my-2">Token Amount:</h1>
                                                                 <h1 className="text-left text-sm font-semibold">{item?.amount}</h1>
@@ -198,7 +198,7 @@ const Tabs: React.FC<Props> = (props) => {
                                                             <div className="flex-col flex md:flex-row flex-wrap justify-around">
                                                                 {currentNftItems?.map((item: any, index: number) => {
                                                                     return (
-                                                                        <div className="mx-1 shadow-lg text-left my-2 py-1 p-2 w-[95%] md:w-1/3 bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600 text-white rounded-md">
+                                                                        <div className="mx-1  text-left my-2 py-1 p-2 w-[95%] md:w-1/3 bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600 text-white rounded-md">
                                                                             <div className="my-2 py-1 border-b">
                                                                                 <h1 className="text-xs my-2">Nft Amount:</h1>
                                                                                 <h1 className="text-left text-sm font-semibold">{item?.amount}</h1>
