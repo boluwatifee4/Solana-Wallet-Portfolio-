@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+#  [Solana-Wallet-Portfolio](https://solana-portfolio-generator.netlify.app) 
+
+This is a forntend project that shows the portfolio (SOL balance, SPL token balance, SPL NFT balance) of an address.
+LINK: [Solana-Wallet-Portfolio](https://solana-portfolio-generator.netlify.app) 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
