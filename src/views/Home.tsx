@@ -13,7 +13,7 @@ type Props = {}
 const Home: React.FC<Props> = (props) => {
   const { authenticate, isAuthenticated, user } = useMoralis();
   // const Moralis = useMoralis()
-  const [userDetails, setUserDetails] = React.useState<any>(JSON.parse(localStorage.getItem("userDetails") || '{}'));
+  const [userDetails, setUserDetails] = React.useState<any>( isAuthenticated ? JSON.parse(localStorage.getItem("userDetails")|| '{}') : {});
   const portfolio = useSelector((state: any) => state.solana.solPortfolio);
   const [solAddress, setSolAddress] = React.useState<string>(userDetails?.solAddress);
   
@@ -54,6 +54,10 @@ const Home: React.FC<Props> = (props) => {
           placeholder={isAuthenticated ? "Sol Address :" + " " + userDetails?.solAddress : "Enter Solana Address"}
         />
         { <span onClick={getPortfolio} style={{ marginLeft: "-3rem", zIndex: "1" }} className=" bg-purple-900  rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 p-2 md:p-3 text-white cursor-pointer text-sm md:text-base">Go</span>}
+
+        <h1 className="text-sm text-white my-2">
+          Test Address : <span className="">6XU36wCxWobLx5Rtsb58kmgAJKVYmMVqy4SHXxENAyAe</span>
+        </h1>
       </div>
 
    {
