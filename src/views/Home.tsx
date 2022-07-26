@@ -13,6 +13,7 @@ type Props = {}
 const Home: React.FC<Props> = (props) => {
   const { authenticate, isAuthenticated, user } = useMoralis();
   // const Moralis = useMoralis()
+  const [showHelp, setShowHelp] = React.useState(true);
   const [userDetails, setUserDetails] = React.useState<any>( isAuthenticated ? JSON.parse(localStorage.getItem("userDetails")|| '{}') : {});
   const portfolio = useSelector((state: any) => state.solana.solPortfolio);
   const [solAddress, setSolAddress] = React.useState<string>(userDetails?.solAddress);
@@ -24,6 +25,7 @@ const Home: React.FC<Props> = (props) => {
 
   const getPortfolio = () => {
     dispatch<any>(getSolPortfolio("devnet", solAddress));
+    setShowHelp(false);
   }
   useEffect(() => {
     dispatch<any>(getSolPortfolio("devnet", solAddress));
@@ -36,15 +38,19 @@ const Home: React.FC<Props> = (props) => {
 
   return (
     <div className="my-2 text-white">
-      <div className="p-3">
+     {
+      showHelp ? (
+        <div className="p-3">
         {isAuthenticated ? (
           <h1 className="font-semibold text-3xl mt-8 my-4"></h1>
         ) : (
-          <h1 className="font-semibold text-xl mt-8 my-4">Hello, seems you were unbale to connect your wallet. Please enter your solana address below to generate your portfolio  </h1>
+          <h1 className="font-semibold text-sm md:text-xl mt-8 my-4">Hello, seems you were unbale to connect your wallet. Please enter your solana or test solana address below to generate your portfolio  </h1>
         )}
 
 
       </div>
+      ): ""
+     }
 
       <div>
         <input type="text"
@@ -55,9 +61,13 @@ const Home: React.FC<Props> = (props) => {
         />
         { <span onClick={getPortfolio} style={{ marginLeft: "-3rem", zIndex: "1" }} className=" bg-purple-900  rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 p-2 md:p-3 text-white cursor-pointer text-sm md:text-base">Go</span>}
 
-        <h1 className="text-sm text-white my-2">
+       {
+        showHelp ? (
+          <h1 className="text-xs md:text-sm text-white my-2">
           Test Address : <span className="">6XU36wCxWobLx5Rtsb58kmgAJKVYmMVqy4SHXxENAyAe</span>
         </h1>
+        ): ""
+       }
       </div>
 
    {

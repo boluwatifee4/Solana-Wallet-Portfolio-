@@ -57,7 +57,7 @@ export const fetchNftUri = (url:string) => async (dispatch:Dispatch) => {
         console.log(res);
         dispatch({
             type: FETCH_NFT_URI,
-            payload: res
+            payload: res.data
         });
     } catch (err) {
         console.log(err);

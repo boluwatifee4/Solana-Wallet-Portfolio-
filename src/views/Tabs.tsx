@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import solLogo from "../assests/images/solLogo.png"
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 import UsePagination from "../toolkits/usePagination";
 import { getNftMetadata, fetchNftUri } from "../store/actions/solana.actions";
 import loader from "../assests/images/loader.gif"
+// import axios from "axios";
 
 type Props = {
     color: string;
@@ -16,7 +17,8 @@ const Tabs: React.FC<Props> = (props) => {
     const portfolio = useSelector((state: any) => state.solana.solPortfolio);
     const nft = useSelector((state: any) => state.solana.nfts);
     const nfts = useSelector((state: any) => state.solana.nft);
-    const { authenticate, isAuthenticated, user } = useMoralis();
+    const [allNfts, setAllNfts] = React.useState([]);
+    // const { authenticate, isAuthenticated, user } = useMoralis();
     const nftsLength = portfolio?.data?.nfts?.length
     const tokensLength = portfolio?.data?.tokens?.length
     const [currentPage, setCurrentPage] = React.useState(1);
@@ -25,10 +27,11 @@ const Tabs: React.FC<Props> = (props) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = portfolio?.data?.tokens?.slice(indexOfFirstItem, indexOfLastItem);
-    const currentNftItems = portfolio?.data?.nfts?.slice(indexOfFirstItem, indexOfLastItem);
+    const currentNftItems = allNfts.slice(indexOfFirstItem, indexOfLastItem);
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
     const paginateNft = (pageNumber: number) => setCurrentPage(pageNumber);
-
+    const API_URL = `${process.env.REACT_APP_BIMA_WEB3}`;
+    const API_KEY = `${process.env.REACT_APP_BIMA_WEB3_API_KEY_TOKEN}`;
     const goToLastPage = (val: any) => {
         setCurrentPage(Math.ceil(portfolio?.data?.tokens?.length / itemsPerPage));
     }
@@ -54,15 +57,36 @@ const Tabs: React.FC<Props> = (props) => {
         setOpenSoloNft(true);
 
     }
+
+    const fetchAll = async () => {
+        const res = await Promise.all(portfolio?.data?.nfts?.map((u: any) => fetch(`${API_URL}nft/devnet/${u?.mint}/metadata`, {
+            headers: {
+                "x-api-key": API_KEY
+            }
+        })))
+        const jsons: any = await Promise.all(res.map(r => r.json()))
+        const res2 = await Promise.all(jsons.map((u: any) => fetch(u?.metaplex?.metadataUri)))
+        const jsons2: any = await Promise.all(res2.map(r => r.json()))
+        // console.log("jsons2", jsons2)
+        setAllNfts(jsons2);
+    }
     useEffect(() => {
-        console.log("portfolio", portfolio);
-        console.log("nft", nft);
-        console.log("nfts", nfts);
+        // console.log("portfolio", nft);
+        // if(Object.keys(portfolio).length > 0){
+        // fetchAll();
+        // }
+        // console.log("nft", allNfts);
+
+
+        // console.log("nfts", portfolio?.data?.nfts);
+        // console.log(currentNftItems);
+
         if (nft?.status === 200) {
             dispatch<any>(fetchNftUri(nft?.data?.metaplex?.metadataUri));
         }
+
         // dispatch<any>(getNftMetadata("mainnet", "2P5msLMi5one6S3qBsUwsDqutQkzuDuG9ush1xLcxYVN"))
-    }, [nft,]);
+    }, [nft, allNfts]);
 
     return (
         <>
@@ -90,6 +114,7 @@ const Tabs: React.FC<Props> = (props) => {
                             >
                                 Overview
                             </a>
+                            {/* <button onClick={fetchAll}>Hii</button> */}
                         </li>
                         <li className="-mb-px mr-2 last:mr-0  text-center">
                             <a
@@ -110,8 +135,9 @@ const Tabs: React.FC<Props> = (props) => {
                                 Tokens
                             </a>
                         </li>
-                        <li className="-mb-px mr-2 last:mr-0  text-center">
+                        <li onClick={fetchAll} className="-mb-px mr-2 last:mr-0  text-center">
                             <a
+
                                 className={
                                     "text-md  font-semibold capitalize px-3 py-3 leading-normal " +
                                     (openTab === 3
@@ -195,35 +221,47 @@ const Tabs: React.FC<Props> = (props) => {
                                                 !openSoloNft ?
                                                     (
                                                         <>
-                                                            <div className="flex-col flex md:flex-row flex-wrap justify-around">
-                                                                {currentNftItems?.map((item: any, index: number) => {
-                                                                    return (
-                                                                        <div className="mx-1  text-left my-2 py-1 p-2 w-[95%] md:w-1/3 bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600 text-white rounded-md">
-                                                                            <div className="my-2 py-1 border-b">
-                                                                                <h1 className="text-xs my-2">Nft Amount:</h1>
-                                                                                <h1 className="text-left text-sm font-semibold">{item?.amount}</h1>
-                                                                            </div>
-                                                                            <div className="my-2 py-1">
-                                                                                <h1 className="text-xs my-2">Associated Nft Address:</h1>
-                                                                                <h1 className="text-left text-xs">{item?.associatedTokenAddress}</h1>
-                                                                            </div>
-                                                                            <button onClick={() => getNftMetadatum(item?.mint)} className="text-sm uppercase bg-gray-400 rounded bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 w-full">
-                                                                                View Nft
-                                                                            </button>
-                                                                        </div>
-                                                                    )
-                                                                }
-                                                                )}
-                                                            </div>
+                                                            {
+                                                                allNfts?.length > 0 ? (
+                                                                    <>
+                                                                    <div className="flex-col flex md:flex-row flex-wrap justify-around">
+                                                                        {currentNftItems?.map((item: any, index: number) => {
+                                                                            return (
+                                                                                <div className="mx-1  text-left my-2 py-1 p-2 w-[95%] md:w-1/3 bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600 text-white rounded-md">
+                                                                                    <div className="my-2 py-1 border-b">
+                                                                                        <h1 className="text-left text-sm font-semibold">{item?.name}</h1>
+                                                                                        {/* <h1 className="text-xs my-2">Name:</h1> */}
+                                                                                    </div>
+                                                                                    <div className="my-2 py-1">
+                                                                                        {/* <h1 className="text-xs my-2">Associated Nft Address:</h1> */}
+                                                                                        <div className="flex justify-center my-2">
+                                                                                            <img src={item?.image} className=" w-auto md:w-60 h-auto md:h-60" alt="" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    {/* <button onClick={() => getNftMetadatum(item?.mint)} className="text-sm uppercase bg-gray-400 rounded bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 w-full">
+                                                                                        View More
+                                                                                    </button> */}
+                                                                                </div>
+                                                                            )
+                                                                        }
+                                                                        )}
+                                                                    </div>
+                                                                    </>
+                                                                ) : (
+                                                                    <div className="flex justify-center items-center mt-6">
+                                                                        <img className="md:w-[25%] w-[50%]" src={loader} alt="" />
+                                                                    </div>
+                                                                )
+                                                            }
                                                             <div className="flex flex-col-reverse md:flex-row justify-between items-center">
-                                                                <p className="text-sm">Page {currentPage} of {Math.ceil(portfolio?.data?.tokens?.length / itemsPerPage)}</p>
+                                                                <p className="text-sm">Page {currentPage} of {Math.ceil(portfolio?.data?.nfts?.length / itemsPerPage)}</p>
                                                                 <div className="flex items-center justify-evenly md:hidden">
                                                                     <h1 onClick={goToPreviousPage} className="m-3 px-2  cursor-pointer bg-gray-400  bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400"> ← </h1>
                                                                     <h1 onClick={goToNextPage} className="m-3 px-2  cursor-pointer bg-gray-400  bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400"> → </h1>
                                                                 </div>
                                                                 <div className="hidden md:flex  items-center justify-end">
                                                                     <h1 onClick={goToFirstPage} className="cursor-pointer"> ← </h1>
-                                                                    <UsePagination itemsPerPage={itemsPerPage} totalItems={tokensLength} paginate={paginate} />
+                                                                    <UsePagination itemsPerPage={itemsPerPage} totalItems={allNfts?.length} paginate={paginateNft} />
                                                                     <h1 onClick={goToNftLastPage} className="cursor-pointer"> → </h1>
                                                                 </div>
                                                             </div>
@@ -232,23 +270,23 @@ const Tabs: React.FC<Props> = (props) => {
                                                     (
                                                         <>
                                                             {
-                                                            Object.keys(nfts).length > 0 ? (
-                                                                <>
-                                                                    <h1 className="text-left cursor-pointer bg-gray-400 w-fit p-1 mb-2 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400" onClick={() => setOpenSoloNft(false)}>Back</h1>
-                                                                    <div className="flex flex-col justify-center">
-                                                                        <h1>Name: {nft?.data?.name}</h1>
-                                                                        <div className="flex justify-center my-2">
-                                                                            <img src={nfts?.data?.image} className=" w-60 h-60" alt="" />
+                                                                Object.keys(nfts).length > 0 ? (
+                                                                    <>
+                                                                        <h1 className="text-left cursor-pointer bg-gray-400 w-fit p-1 mb-2 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400" onClick={() => setOpenSoloNft(false)}>Back</h1>
+                                                                        <div className="flex flex-col justify-center">
+                                                                            <h1>Name: {nft?.data?.name}</h1>
+                                                                            <div className="flex justify-center my-2">
+                                                                                <img src={nfts?.data?.image} className=" w-60 h-60" alt="" />
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </>
+                                                                    </>
 
-                                                            ) : (
-                                                                <div className="flex justify-center items-center mt-6">
-                                                                    <img className="md:w-[25%] w-[50%]" src={loader} alt="" />
-                                                                </div>
-                                                            )
-                                                        }
+                                                                ) : (
+                                                                    <div className="flex justify-center items-center mt-6">
+                                                                        <img className="md:w-[25%] w-[50%]" src={loader} alt="" />
+                                                                    </div>
+                                                                )
+                                                            }
                                                         </>
                                                     )
                                             }
