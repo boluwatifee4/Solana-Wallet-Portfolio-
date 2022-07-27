@@ -46,7 +46,7 @@ const Welcome: React.FC<Props> = (props) => {
                     });
             }
         } else {
-            alert("Please Install Phantom Wallet");
+            alert("Please Install Phantom Wallet To Continue");
             setUserDetails("Connect With 👻 Wallet");
         }
 
