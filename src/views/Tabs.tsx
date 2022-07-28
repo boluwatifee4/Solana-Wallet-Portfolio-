@@ -22,7 +22,7 @@ const Tabs: React.FC<Props> = (props) => {
     const nftsLength = portfolio?.data?.nfts?.length
     const tokensLength = portfolio?.data?.tokens?.length
     const [currentPage, setCurrentPage] = React.useState(1);
-    const [itemsPerPage, setItemsPerPage] = React.useState(2);
+    const [itemsPerPage, setItemsPerPage] = React.useState(4);
     const dispatch = useDispatch();
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -43,6 +43,11 @@ const Tabs: React.FC<Props> = (props) => {
     }
     const goToNextPage = () => {
         if (currentPage < Math.ceil(portfolio?.data?.tokens?.length / itemsPerPage)) {
+            setCurrentPage(currentPage + 1);
+        }
+    }
+    const goToNftNextPage = () => {
+        if (currentPage < Math.ceil(portfolio?.data?.nfts?.length / itemsPerPage)) {
             setCurrentPage(currentPage + 1);
         }
     }
@@ -224,7 +229,7 @@ const Tabs: React.FC<Props> = (props) => {
                                                             {
                                                                 allNfts?.length > 0 ? (
                                                                     <>
-                                                                    <div className="flex-col flex md:flex-row flex-wrap justify-around">
+                                                                    <div className="flex-col h-auto  md:h-[20rem] overflow-y-auto md:overflow-y-scroll flex md:flex-row flex-wrap justify-around" id="style-7">
                                                                         {currentNftItems?.map((item: any, index: number) => {
                                                                             return (
                                                                                 <div className="mx-1  text-left my-2 py-1 p-2 w-[95%] md:w-1/3 bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600 text-white rounded-md">
@@ -257,7 +262,7 @@ const Tabs: React.FC<Props> = (props) => {
                                                                 <p className="text-sm">Page {currentPage} of {Math.ceil(portfolio?.data?.nfts?.length / itemsPerPage)}</p>
                                                                 <div className="flex items-center justify-evenly md:hidden">
                                                                     <h1 onClick={goToPreviousPage} className="m-3 px-2  cursor-pointer bg-gray-400  bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400"> ← </h1>
-                                                                    <h1 onClick={goToNextPage} className="m-3 px-2  cursor-pointer bg-gray-400  bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400"> → </h1>
+                                                                    <h1 onClick={goToNftNextPage} className="m-3 px-2  cursor-pointer bg-gray-400  bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400"> → </h1>
                                                                 </div>
                                                                 <div className="hidden md:flex  items-center justify-end">
                                                                     <h1 onClick={goToFirstPage} className="cursor-pointer"> ← </h1>

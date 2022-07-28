@@ -17,18 +17,30 @@ const Home: React.FC<Props> = (props) => {
   const [userDetails, setUserDetails] = React.useState<any>( isAuthenticated ? JSON.parse(localStorage.getItem("userDetails")|| '{}') : {});
   const portfolio = useSelector((state: any) => state.solana.solPortfolio);
   const [solAddress, setSolAddress] = React.useState<string>(userDetails?.solAddress);
-  
+  const [hasError, setHasError] = React.useState<boolean>(false);
   const dispatch = useDispatch();
   // const [openTab, setOpenTab] = React.useState(1);
   
-  // console.log("user",userDetails);
+  // console.log("user",solAddress);
 
   const getPortfolio = () => {
-    dispatch<any>(getSolPortfolio("devnet", solAddress));
-    setShowHelp(false);
+    // check if input field is empty
+    if (solAddress === undefined || solAddress === "") {
+      setHasError(true);
+      setSolAddress("You must enter a valid Solana address");
+      setShowHelp(true);
+      return;
+    } else  {
+      dispatch<any>(getSolPortfolio("devnet", solAddress));
+      setShowHelp(false);
+      setHasError(false);
+  
+    }
   }
   useEffect(() => {
-    dispatch<any>(getSolPortfolio("devnet", solAddress));
+    if(solAddress !== undefined && solAddress !== ""){
+      dispatch<any>(getSolPortfolio("devnet", solAddress));
+    }
     // console.log("portfolio", portfolio);
     // dispatch<any>(getNftMetadata("mainnet", "2P5msLMi5one6S3qBsUwsDqutQkzuDuG9ush1xLcxYVN"))
   }, []);
@@ -56,7 +68,7 @@ const Home: React.FC<Props> = (props) => {
         <input type="text"
           value={solAddress}
           onChange={(e) => setSolAddress(e.target.value)}
-          className="bg-gray-400 md:pr-0 pr-14 rounded-full text-xs md:text-base bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 w-[95%]  md:w-3/6 p-3 text-white"
+          className={`bg-gray-400 md:pr-0 pr-14 rounded-full text-xs md:text-base bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border  w-[95%]  md:w-3/6 p-3 text-white ${hasError === true ? "border-red-400 text-red-400" : "border-violet-400 text-white"}`}
           placeholder={isAuthenticated ? "Sol Address :" + " " + userDetails?.solAddress : "Enter Solana Address"}
         />
         { <span onClick={getPortfolio} style={{ marginLeft: "-3rem", zIndex: "1" }} className=" bg-purple-900  rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-violet-400 p-2 md:p-3 text-white cursor-pointer text-sm md:text-base">Go</span>}
