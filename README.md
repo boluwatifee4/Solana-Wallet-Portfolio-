@@ -1,7 +1,46 @@
-#  [Solana-Wallet-Portfolio](https://solana-portfolio-generator.netlify.app) 
+#  [Solana-Wallet-Portfolio-Generator 🔥](https://solana-portfolio-generator.netlify.app) 
+
+<!-- md table -->
+| **View** | **Image Views** |
+| ------------ | -------------- |
+| **Home (Mobile and desktop view** | ![mobile](../web3/src/assests/images/home-mobile-preview.PNG) ![desktop](../web3/src/assests/images/preview-home.jpg)   |
+| **Overview (Mobile and desktop view** | ![mobile](../web3/src/assests/images/overview-mobile-preview.PNG) ![desktop](../web3/src/assests/images/overview-desktop-preview.PNG) |
+| **Nfts (Mobile and desktop view** | ![mobile](../web3/src/assests/images/nfts-mobile-preview.PNG) ![desktop](../web3/src/assests/images/nfts-desktop-preview.PNG) |
+
+
+
+## Project Description 
 
 This is a forntend project that shows the portfolio (SOL balance, SPL token balance, SPL NFT balance) of an address.
-LINK: [Solana-Wallet-Portfolio](https://solana-portfolio-generator.netlify.app) 
+##### LINK 🔗: [Solana-Wallet-Portfolio](https://solana-portfolio-generator.netlify.app) 
+
+### Features
+<!-- create list -->
+>* Connection with phantom wallet (Phantom Wallet)
+>* View your portfolio (SOL balance, SPL token balance, SPL NFT balance)
+>* View your NFTS (Images)
+>* Validated input field
+>* Responsive design
+>* Reusable customizable pagination component
+
+### Technologies
+<!-- create list -->
+* React
+* React-router-dom
+* TailwindCSS
+* TypeScript
+* React-fontawesome
+* [Moralis-Web-3-API](https://docs.moralis.io/introduction/readme)
+
+### Future Updates
+<!-- create list -->
+* Transfer Nfts to other address
+* Swap Tokens
+* View more info about nfts
+* View more info about tokens and more
+
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
