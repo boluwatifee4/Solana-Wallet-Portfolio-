@@ -3,9 +3,9 @@
 <!-- md table -->
 | **View** | **Image Views** |
 | ------------ | -------------- |
-| **Home (Mobile and desktop view** | ![mobile](../web3/src/assests/images/home-mobile-preview.PNG) ![desktop](../web3/src/assests/images/preview-home.jpg)   |
-| **Overview (Mobile and desktop view** | ![mobile](../web3/src/assests/images/overview-mobile-preview.PNG) ![desktop](../web3/src/assests/images/overview-desktop-preview.PNG) |
-| **Nfts (Mobile and desktop view** | ![mobile](../web3/src/assests/images/nfts-mobile-preview.PNG) ![desktop](../web3/src/assests/images/nfts-desktop-preview.PNG) |
+| **Home (Mobile and desktop view** | ![mobile](./src/assests/images/home-mobile-preview.PNG) ![desktop](./src/assests/images/preview-home.jpg)   |
+| **Overview (Mobile and desktop view** | ![mobile](./src/assests/images/overview-mobile-preview.PNG) ![desktop](./src/assests/images/overview-desktop-preview.PNG) |
+| **Nfts (Mobile and desktop view** | ![mobile](./src/assests/images/nfts-mobile-preview.PNG) ![desktop](./src/assests/images/nfts-desktop-preview.PNG) |
 
 
 
